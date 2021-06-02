@@ -1,0 +1,17 @@
+main: dev.appeazethecheese.pvpmanager.Main
+name: PvpManager
+version: '1.0'
+api-version: 1.16
+author: AppeazeTheCheese
+commands:
+  pvp:
+    description: Toggle pvp on or off
+    usage: /pvp [on|off|toggle]
+    permission: pvpmanager.toggle
+permissions:
+  pvpmanager.toggleothers:
+    description: Allows toggling of other player's PVP state as well as changing their own even when forced
+    default: op
+  pvpmanager.ignorecooldown:
+    description: Disables the command cooldown after engaging in PVP
+    default: op
