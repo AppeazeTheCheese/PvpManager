@@ -1,7 +1,7 @@
 # PvpManager
 <u><b>UNFINISHED</b></u>
 
-This plugin allows players to toggle PVP on and off. This will prevent them from damaging and being damaged by other players. *This does NOT prevent mob or self damage*. Players will have a 10 second cooldown after engaging in pvp, during which they cannot use `/pvp off`. Admins may force the PVP state of other players by passing the player name to either `/pvp on` or `/pvp off`.
+This plugin allows players to toggle PVP on and off. This will prevent them from damaging and being damaged by other players via melee, projectiles, potions (poison and instant damage), and TNT. *This does NOT prevent mob or self damage*. Players will have a 10 second cooldown after engaging in pvp, during which they cannot use `/pvp off`. Admins may force the PVP state of other players by passing the player name to either `/pvp on` or `/pvp off`.
 
 <h1>Commands</h1>
 
