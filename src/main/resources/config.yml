@@ -1,0 +1,5 @@
+defaultSettings:
+  pvpEnabled: false
+  locked: false
+  cooldownCause: Inactive
+  cooldownSecondsRemaining: 0

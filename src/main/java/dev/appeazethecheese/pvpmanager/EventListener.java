@@ -1,5 +1,9 @@
 package dev.appeazethecheese.pvpmanager;
 
+import dev.appeazethecheese.pvpmanager.Cooldown.CooldownType;
+import dev.appeazethecheese.pvpmanager.Data.PlayerDataManager;
+import dev.appeazethecheese.pvpmanager.Data.PvpState;
+import dev.appeazethecheese.pvpmanager.Data.PvpStateManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -52,21 +56,21 @@ public class EventListener implements Listener {
             return;
         }
 
-        PvpState attackerState = PvpStateManager.GetState(attacker);
-        PvpState targetState = PvpStateManager.GetState(target);
-        if (!attackerState.IsEnabled()) {
-            attacker.sendMessage(ChatColor.RED + "You can't attack others when you have PVP disabled.");
+        PvpState attackerState = PvpStateManager.getOrCreateState(attacker);
+        PvpState targetState = PvpStateManager.getOrCreateState(target);
+        if (!attackerState.isEnabled()) {
+            attacker.sendMessage(ChatColor.RED + "You can't attack others when you have PVP disabled. To enable, do /pvp on");
             event.setCancelled(true);
             return;
         }
-        if (!targetState.IsEnabled()) {
+        if (!targetState.isEnabled()) {
             attacker.sendMessage(ChatColor.RED + target.getDisplayName() + " has PVP disabled.");
             event.setCancelled(true);
             return;
         }
 
-        attackerState.StartOrResetCooldown();
-        targetState.StartOrResetCooldown();
+        attackerState.lockStateWithCooldown(CooldownType.Pvp, 10);
+        targetState.lockStateWithCooldown(CooldownType.Pvp, 10);
     }
     @EventHandler
     public void onPotionSplash(PotionSplashEvent event){
@@ -74,31 +78,32 @@ public class EventListener implements Listener {
         if(event.getPotion().getEffects().stream().noneMatch(x -> x.getType().getName().equals(PotionEffectType.POISON.getName()))) return;
 
         Player attacker = (Player) event.getPotion().getShooter();
-        PvpState attackerState = PvpStateManager.GetState(attacker);
+        PvpState attackerState = PvpStateManager.getOrCreateState(attacker);
         for(LivingEntity e : event.getAffectedEntities().stream().filter(x -> x instanceof Player).collect(Collectors.toList())){
             if(e.getUniqueId() == attacker.getUniqueId())
                 continue;
 
             Player target = (Player)e;
-            PvpState targetState = PvpStateManager.GetState(target);
-            if(!attackerState.IsEnabled()){
-                attacker.sendMessage(ChatColor.RED + "You can't attack others when you have PVP disabled.");
+            PvpState targetState = PvpStateManager.getOrCreateState(target);
+            if(!attackerState.isEnabled()){
+                attacker.sendMessage(ChatColor.RED + "You can't attack others when you have PVP disabled. To enable, do /pvp on");
                 event.setIntensity(e, 0);
             }
-            else if(!targetState.IsEnabled()){
+            else if(!targetState.isEnabled()){
                 attacker.sendMessage(ChatColor.RED + target.getDisplayName() + " has PVP disabled.");
                 event.setIntensity(e, 0);
             }
         }
     }
     @EventHandler public void onPlayerLeave(PlayerQuitEvent event){
-        PvpState state = PvpStateManager.GetState(event.getPlayer());
-        if(state.IsCooldownActive() && !state.IsLeaveCooldownActive())
-            state.RaiseLeaveFlag();
+        PvpState state = PvpStateManager.getOrCreateState(event.getPlayer());
+        state.playerLeft();
+
+        PvpStateManager.flush(event.getPlayer().getUniqueId());
     }
 
     @EventHandler public void onPlayerJoin(PlayerJoinEvent event){
-        PvpState state = PvpStateManager.GetState(event.getPlayer());
-        state.CheckLeaveFlag();
+        PvpState state = PvpStateManager.getOrCreateState(event.getPlayer());
+        state.playerJoined();
     }
 }

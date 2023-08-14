@@ -6,12 +6,15 @@ author: AppeazeTheCheese
 commands:
   pvp:
     description: Toggle pvp on or off
-    usage: /pvp [on|off|toggle]
+    usage: /pvp [on|off]
     permission: pvpmanager.toggle
 permissions:
-  pvpmanager.toggleothers:
+  pvpmanager.toggle:
+    description: Allows toggling of player's own PVP state
+    default: true
+  pvpmanager.admin.toggleothers:
     description: Allows toggling of other player's PVP state as well as changing their own even when forced
     default: op
-  pvpmanager.ignorecooldown:
+  pvpmanager.admin.ignorecooldown:
     description: Disables the command cooldown after engaging in PVP
     default: op
