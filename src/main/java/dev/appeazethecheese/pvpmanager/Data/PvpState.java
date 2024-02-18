@@ -17,7 +17,7 @@ public class PvpState {
     private boolean sendMessageOnCooldownEnd = false;
     private CooldownType cooldownCause = CooldownType.Inactive;
     private CooldownTimer cooldown = null;
-    private Player player;
+    private final Player player;
 
     private static int LeavePenaltySeconds;
 
