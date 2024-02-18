@@ -1,3 +1,4 @@
+leavePenaltySeconds: 120
 defaultSettings:
   pvpEnabled: false
   locked: false

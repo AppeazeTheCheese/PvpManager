@@ -19,6 +19,19 @@ public class PvpState {
     private CooldownTimer cooldown = null;
     private Player player;
 
+    private static int LeavePenaltySeconds;
+
+    static {
+        try{
+            LeavePenaltySeconds = Main.Instance.getConfig().getInt("leavePenaltySeconds");
+            Main.Instance.getLogger().info("Leave cooldown penalty set to " + LeavePenaltySeconds + " seconds.");
+        }
+        catch(Throwable e){
+            Main.Instance.getLogger().warning("Failed to get leave cooldown penalty duration from config. Setting it to 120 seconds.");
+            LeavePenaltySeconds = 120;
+        }
+    }
+
     public PvpState(Player player){
         this.player = player;
     }
@@ -46,7 +59,6 @@ public class PvpState {
     }
 
     public void playerLeft(){
-        final int leavePenaltySeconds = 120;
 
         if(cooldownCause == CooldownType.Pvp){
             // Apply leave penalty
@@ -56,7 +68,7 @@ public class PvpState {
                 public void run() {
                     onTimerElapsed();
                 }
-            }, leavePenaltySeconds);
+            }, LeavePenaltySeconds);
             setLockedState(false);
             setCooldown(timer, CooldownType.Leave);
         }
