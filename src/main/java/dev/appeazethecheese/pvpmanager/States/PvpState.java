@@ -1,4 +1,4 @@
-package dev.appeazethecheese.pvpmanager.Data;
+package dev.appeazethecheese.pvpmanager.States;
 
 import dev.appeazethecheese.pvpmanager.Cooldown.CooldownTimer;
 import dev.appeazethecheese.pvpmanager.Cooldown.CooldownType;

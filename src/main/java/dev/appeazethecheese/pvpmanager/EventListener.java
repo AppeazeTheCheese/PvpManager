@@ -1,9 +1,8 @@
 package dev.appeazethecheese.pvpmanager;
 
 import dev.appeazethecheese.pvpmanager.Cooldown.CooldownType;
-import dev.appeazethecheese.pvpmanager.Data.PlayerDataManager;
-import dev.appeazethecheese.pvpmanager.Data.PvpState;
-import dev.appeazethecheese.pvpmanager.Data.PvpStateManager;
+import dev.appeazethecheese.pvpmanager.States.PvpState;
+import dev.appeazethecheese.pvpmanager.States.PvpStateManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;

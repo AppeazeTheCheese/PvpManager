@@ -1,7 +1,9 @@
-package dev.appeazethecheese.pvpmanager.Data;
+package dev.appeazethecheese.pvpmanager.States;
 
 import dev.appeazethecheese.pvpmanager.Cooldown.CooldownType;
+import dev.appeazethecheese.pvpmanager.Data.PlayerDataManager;
 import dev.appeazethecheese.pvpmanager.Main;
+import dev.appeazethecheese.pvpmanager.States.PvpState;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

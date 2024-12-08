@@ -1,9 +1,9 @@
 package dev.appeazethecheese.pvpmanager;
 
-import dev.appeazethecheese.pvpmanager.Commands.CommandHandler;
-import dev.appeazethecheese.pvpmanager.Data.PlayerData;
+import dev.appeazethecheese.pvpmanager.Commands.DuelCommand;
+import dev.appeazethecheese.pvpmanager.Commands.PvpCommand;
 import dev.appeazethecheese.pvpmanager.Data.PlayerDataManager;
-import dev.appeazethecheese.pvpmanager.Data.PvpStateManager;
+import dev.appeazethecheese.pvpmanager.States.PvpStateManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.IOException;
@@ -19,8 +19,15 @@ public class Main extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        Objects.requireNonNull(getCommand("pvp")).setExecutor(CommandHandler::pvpCommand);
-        Objects.requireNonNull(getCommand("pvp")).setTabCompleter(CommandHandler::pvpCommandTabFill);
+        var pvpCommand = new PvpCommand();
+        var duelCommand = new DuelCommand();
+
+        getCommand("pvp").setExecutor(pvpCommand);
+        getCommand("pvp").setTabCompleter(pvpCommand);
+
+        getCommand("duel").setExecutor(duelCommand);
+        getCommand("duel").setTabCompleter(duelCommand);
+
         getServer().getPluginManager().registerEvents(new EventListener(), this);
 
         saveDefaultConfig();

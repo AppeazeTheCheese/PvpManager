@@ -8,9 +8,16 @@ commands:
     description: Toggle pvp on or off
     usage: /pvp [on|off]
     permission: pvpmanager.toggle
+  duel:
+    description: Duel another player near you
+    usage: /duel {player}
+    permission: pvpmanager.duel
 permissions:
   pvpmanager.toggle:
     description: Allows toggling of player's own PVP state
+    default: true
+  pvpmanager.duel:
+    description: Allows a player to initiate a duel
     default: true
   pvpmanager.admin.toggleothers:
     description: Allows toggling of other player's PVP state as well as changing their own even when forced

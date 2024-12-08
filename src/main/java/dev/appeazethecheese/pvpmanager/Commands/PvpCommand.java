@@ -1,14 +1,12 @@
 package dev.appeazethecheese.pvpmanager.Commands;
 
 import dev.appeazethecheese.pvpmanager.Cooldown.CooldownType;
-import dev.appeazethecheese.pvpmanager.Data.PvpState;
-import dev.appeazethecheese.pvpmanager.Data.PvpStateManager;
+import dev.appeazethecheese.pvpmanager.States.PvpState;
+import dev.appeazethecheese.pvpmanager.States.PvpStateManager;
 import dev.appeazethecheese.pvpmanager.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -19,7 +17,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class CommandHandler {
+public class PvpCommand implements CommandExecutor, TabCompleter {
     private static final Map<Character, Integer> aliasMultiplierMap = new HashMap<>(){{
         put('s', 1);
         put('m', 60);
@@ -35,7 +33,8 @@ public class CommandHandler {
 
     public static final String basicUsage = "Usage: /pvp <on|off>";
 
-    public static boolean pvpCommand(CommandSender sender, Command command, String label, String[] args) {
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof ConsoleCommandSender) {
             // Console
             ConsoleCommandSender console = (ConsoleCommandSender) sender;
@@ -219,7 +218,9 @@ public class CommandHandler {
         }
         return true;
     }
-    public static List<String> pvpCommandTabFill(CommandSender sender, Command command, String alias, String[] args){
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args){
         ArrayList<String> ret = new ArrayList<>();
         if(args.length <= 1){
             ret.add("on");
