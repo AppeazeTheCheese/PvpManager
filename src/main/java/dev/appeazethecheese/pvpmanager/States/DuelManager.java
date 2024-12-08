@@ -16,6 +16,6 @@ public class DuelManager {
     }
 
     public static boolean isInDuel(Player player){
-
+        return false;
     }
 }

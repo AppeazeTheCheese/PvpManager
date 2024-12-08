@@ -229,7 +229,7 @@ public class PvpCommand implements CommandExecutor, TabCompleter {
         else if(args.length <= 2 && (sender instanceof Player)){
             PvpState state = PvpStateManager.getOrCreateState(((Player) sender));
             if(state.canToggleOthers()){
-                ret.addAll(Bukkit.getServer().getOnlinePlayers().stream().map(Player::getName).collect(Collectors.toList()));
+                ret.addAll(Bukkit.getServer().getOnlinePlayers().stream().map(Player::getName).toList());
             }
         }
         else if(args.length <= 3){
